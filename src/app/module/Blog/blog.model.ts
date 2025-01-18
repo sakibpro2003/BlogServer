@@ -21,7 +21,7 @@ const blogSchema = new Schema<TBlog>(
     // }
     isPublished: {
       type: Boolean,
-      required: true,
+      default:true
     },
   },
   {

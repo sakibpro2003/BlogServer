@@ -23,7 +23,7 @@ const getAllBlogs = async (req: Request, res: Response) => {
 };
 const updateBlog = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await BlogService.updateBlogIntoDB( id,req.body);
+  const result = await BlogService.updateBlogIntoDB(id, req.body);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
@@ -33,7 +33,7 @@ const updateBlog = async (req: Request, res: Response) => {
 };
 const deleteBlog = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await BlogService.deleteBlogFromDB( id);
+  const result = await BlogService.deleteBlogFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
@@ -42,4 +42,9 @@ const deleteBlog = async (req: Request, res: Response) => {
   });
 };
 
-export const BlogController = { createBlog, updateBlog,deleteBlog,getAllBlogs };
+export const BlogController = {
+  createBlog,
+  updateBlog,
+  deleteBlog,
+  getAllBlogs,
+};
