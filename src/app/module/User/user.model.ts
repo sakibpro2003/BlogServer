@@ -42,13 +42,19 @@ userSchema.post("save", (doc, next) => {
 userSchema.statics.isUserExistsByCustomId = async function (id: string) {
  return await User.findOne({ id });
 };
+
+// userSchema.statics.isPasswordMatched = async function (
+//   plainTextPassword: string,
+//   hashedPassword:string,
+// ) {
+//   return await bcrypt.compare(plainTextPassword, hashedPassword);
+//   // console.log(isPasswordMatched,'ispassma')
+// };
+
 userSchema.statics.isPasswordMatched = async function (
-  plainTextPassword: string,
-  hashedPassword
+  plainTextPassword,
+  hashedPassword,
 ) {
-  const isPasswordMatched = await bcrypt.compare(
-    plainTextPassword,
-    hashedPassword
-  );
+  return await bcrypt.compare(plainTextPassword, hashedPassword);
 };
 export const User = model<TUser, UserModel>("User", userSchema);
