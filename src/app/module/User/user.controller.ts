@@ -8,6 +8,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({
       success: true,
       message: "User create succskjdskfndsk",
+      data: result,
     });
   } catch (err) {
     next(err);

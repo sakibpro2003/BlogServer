@@ -1,6 +1,11 @@
+import { User } from "../User/user.model";
 import { TLoginUser } from "./auth.interface";
 
-const loginUser = (payload: TLoginUser) => {
+const loginUser = async(payload: TLoginUser) => {
+  const isUserExists = await User.findOne({id: payload?.id})
+  if(!isUserExists){
+throw new AppError
+  }
     console.log(payload)
   return {};
 };
