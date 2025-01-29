@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import sendResponse from "../../utils/sendResponse";
 import { BlogService } from "./blog.service";
 import { Request, Response } from "express";
+import catchAsync from "../../utils/catchAsync";
 
 const createBlog = async (req: Request, res: Response) => {
   const result = await BlogService.createBlogIntoDB(req.body);
@@ -12,7 +13,8 @@ const createBlog = async (req: Request, res: Response) => {
     data: result,
   });
 };
-const getAllBlogs = async (req: Request, res: Response) => {
+const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
+  // console.log('test',req.user)
   const result = await BlogService.getAllBlogsFromDB();
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -20,7 +22,7 @@ const getAllBlogs = async (req: Request, res: Response) => {
     message: "Blogs fetched successfully",
     data: result,
   });
-};
+});
 const updateBlog = async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await BlogService.updateBlogIntoDB(id, req.body);
