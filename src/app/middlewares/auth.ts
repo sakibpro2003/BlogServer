@@ -10,7 +10,10 @@ import config from "../../config";
 // }
 const auth = (...requiredRoles) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization;
+    const tokenWithBearer = req.headers.authorization;
+    const token = tokenWithBearer?.split(" ")[1];
+    console.log(token);
+
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized access!");
     }

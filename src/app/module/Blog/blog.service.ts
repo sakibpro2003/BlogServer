@@ -9,10 +9,12 @@ const updateBlogIntoDB = async (id: string, payload: TBlog) => {
   const result = await Blog.findByIdAndUpdate(id, payload, { new: true });
   return result;
 };
+
 const deleteBlogFromDB = async (id: string) => {
-  const result = await Blog.findByIdAndDelete(id);
+  const result = await Blog.findByIdAndDelete({ _id: id });
   return result;
 };
+
 const getAllBlogsFromDB = async () => {
   const result = await Blog.find();
   return result;

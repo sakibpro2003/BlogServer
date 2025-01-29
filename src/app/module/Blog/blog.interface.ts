@@ -5,16 +5,14 @@
 // createdAt: Date – The timestamp when the blog post was created.
 // updatedAt: Date – The timestamp of the last update to the blog post.
 
-export type TBlog={
-    title: string,
-    content: string,
-    // author: ,
-    isPublished:boolean,
+import { ObjectId } from "mongoose";
+import { TUser } from "../User/user.interface";
 
+export type TBlog = {
+  title: string;
+  content: string;
+  author: ObjectId | TUser;
+  isPublished: boolean;
 
-    
-    // todo: timestap
-
-
-
-}
+  // todo: timestap
+};

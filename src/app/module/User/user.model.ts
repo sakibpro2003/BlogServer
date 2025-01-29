@@ -4,7 +4,11 @@ import bcrypt from "bcrypt";
 import config from "../../../config";
 const userSchema = new Schema<TUser, UserModel>(
   {
-    id: {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
       type: String,
       required: true,
     },
@@ -14,6 +18,7 @@ const userSchema = new Schema<TUser, UserModel>(
     },
     role: {
       type: String,
+      default: "user",
       enum: ["user", "admin"],
     },
     isBlocked: {
@@ -40,13 +45,12 @@ userSchema.post("save", (doc, next) => {
   next();
 });
 userSchema.statics.isUserExistsByCustomId = async function (id: string) {
- return await User.findOne({ id });
+  return await User.findOne({ id });
 };
-
 
 userSchema.statics.isPasswordMatched = async function (
   plainTextPassword,
-  hashedPassword,
+  hashedPassword
 ) {
   return await bcrypt.compare(plainTextPassword, hashedPassword);
 };

@@ -3,6 +3,7 @@ import sendResponse from "../../utils/sendResponse";
 import { BlogService } from "./blog.service";
 import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
+import { Blog } from "./blog.model";
 
 const createBlog = async (req: Request, res: Response) => {
   const result = await BlogService.createBlogIntoDB(req.body);
@@ -35,7 +36,9 @@ const updateBlog = async (req: Request, res: Response) => {
 };
 const deleteBlog = async (req: Request, res: Response) => {
   const { id } = req.params;
+  console.log(id)
   const result = await BlogService.deleteBlogFromDB(id);
+  console.log(result,"controller")
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
