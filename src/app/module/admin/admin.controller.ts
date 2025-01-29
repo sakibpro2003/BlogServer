@@ -5,6 +5,7 @@ import { AdminServices } from "./admin.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import mongoose from "mongoose";
+import { Blog } from "../Blog/blog.model";
 
 const blockUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -31,7 +32,19 @@ const blockUser = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+const deleteBlog = async (req: Request, res: Response, next: NextFunction) => {
+  const { userId } = req.params;
+  console.log(userId, "controller userid")
+  const result = await AdminServices.deleteBlogFromDB(userId);
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: "Blog deleted successfully",
+    data: result,
+  });
+};
 
 export const AdminController = {
   blockUser,
+  deleteBlog,
 };
