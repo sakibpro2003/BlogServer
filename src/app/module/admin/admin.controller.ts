@@ -8,8 +8,9 @@ import mongoose from "mongoose";
 import { Blog } from "../Blog/blog.model";
 
 const blockUser = async (req: Request, res: Response, next: NextFunction) => {
+  
   try {
-    const { userId } = req.params; // Extract `userId` from request parameters
+    const { userId } = req.params; 
 
     const result = await AdminServices.blockUserIntoDB(userId, req.body);
 
