@@ -10,7 +10,6 @@ app.use(express.json());
 app.use("/api", router);
 
 //global error handler recieves 4 params
-app.use(globalErrorHandler);
 //not found
 app.use(notFound)
 app.get("/", (req: Request, res: Response) => {
@@ -19,4 +18,5 @@ app.get("/", (req: Request, res: Response) => {
     message: "server running from",
   });
 });
+app.use(globalErrorHandler);
 export default app;

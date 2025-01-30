@@ -1,5 +1,9 @@
+import httpStatus from "http-status";
+import AppError from "../../error/AppError";
 import { TBlog } from "./blog.interface";
 import { Blog } from "./blog.model";
+import { Request } from "express";
+import mongoose, { Types } from "mongoose";
 
 const createBlogIntoDB = async (payload: TBlog) => {
   const result = await Blog.create(payload);
@@ -10,8 +14,21 @@ const updateBlogIntoDB = async (id: string, payload: TBlog) => {
   return result;
 };
 
-const deleteBlogFromDB = async (id: string) => {
-  const result = await Blog.findByIdAndDelete({ _id: id });
+const deleteBlogFromDB = async (req: Request, id: string) => {
+  const blog = await Blog.findById(id);
+  if (!blog) {
+    throw new AppError(httpStatus.NOT_FOUND, "Blog not found");
+  }
+  const userId = req?.user?._id;
+  const authorId = (blog?.author).toString();
+
+  if (authorId !== userId) {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      "You dont have permission to delete this blog"
+    );
+  }
+  const result = await Blog.findByIdAndDelete(id);
   return result;
 };
 

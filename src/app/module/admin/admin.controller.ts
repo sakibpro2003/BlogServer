@@ -35,7 +35,7 @@ const blockUser = async (req: Request, res: Response, next: NextFunction) => {
 };
 const deleteBlog = async (req: Request, res: Response, next: NextFunction) => {
   const { userId } = req.params;
-  console.log(userId, "controller userid")
+  // console.log(userId, "controller userid")
   const result = await AdminServices.deleteBlogFromDB(userId);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,

@@ -14,6 +14,6 @@ function server(){
     
 }
 
-console.log(config.database_url)
+// console.log(config.database_url)
 
 server()

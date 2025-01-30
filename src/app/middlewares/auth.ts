@@ -5,14 +5,11 @@ import httpStatus from "http-status";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../../config";
 
-// interface CustomRequest extends Request {
-//   user: JwtPayload;
-// }
 const auth = (...requiredRoles) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const tokenWithBearer = req.headers.authorization;
     const token = tokenWithBearer?.split(" ")[1];
-    console.log(token);
+    // console.log(token);
 
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized access!");
@@ -28,8 +25,7 @@ const auth = (...requiredRoles) => {
           throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized access!");
         }
         // decoded undefined
-        // const { userId, role } = decoded;
-        req.user = decoded as JwtPayload;
+        req.user = decoded as JwtPayload & { _id: string };
 
         const role = (decoded as JwtPayload).role;
         if (requiredRoles && !requiredRoles.includes(role)) {

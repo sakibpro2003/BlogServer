@@ -11,8 +11,6 @@ const createUserIntoDb = async (userData: TUser) => {
   return result;
 };
 
-
-
 export const UserServices = {
   createUserIntoDb,
 };

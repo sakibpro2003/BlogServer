@@ -8,8 +8,8 @@ import jwt from "jsonwebtoken";
 import config from "../../../config";
 
 const loginUser = async (payload: TLoginUser) => {
-  const user = await User.isUserExistsByCustomId(payload?.id);
-  console.log(user);
+  const user = await User.isUserExistsByCustomId(payload?.email);
+ const _id = (user?._id).toString();
   if (!user) {
     throw new AppError(StatusCodes.NOT_FOUND, "User not found!");
   }
@@ -20,8 +20,10 @@ const loginUser = async (payload: TLoginUser) => {
 
   if (!(await User.isPasswordMatched(payload?.password, user?.password)))
     throw new AppError(httpStatus.FORBIDDEN, "Password do not matched");
+  
 
   const jwtPayload = {
+    _id:user?._id,
     role: user?.role,
   };
 
