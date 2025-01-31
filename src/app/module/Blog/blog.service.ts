@@ -61,12 +61,26 @@ const getAllBlogsFromDB = async (query) => {
     })),
   });
   //filtering
-  const excludeFields = ["search", "filter"];
+  const excludeFields = ["search", "sortBy", "filter","sortOrder"];
   excludeFields.forEach((element) => delete queryObj[element]);
 
-  const result = await searchQuery.find(queryObj).populate("author");
-  console.log(result);
-  return result;
+  const filterQuery = searchQuery.find(queryObj).populate("author");
+
+  let sortBy = "createdAt";
+
+  if (query?.sortOrder === "asc") {
+    sortBy = query?.sortOrder;
+    console.log("asc", sortBy);
+  }
+  if (query?.sortOrder === "desc") {
+    sortBy = query?.sortOrder;
+    console.log("desc", sortBy);
+  }
+
+
+  const sortQuery = await filterQuery.sort(sortBy);
+
+  return sortQuery;
 };
 
 export const BlogService = {

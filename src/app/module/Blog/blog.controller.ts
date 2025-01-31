@@ -16,7 +16,6 @@ const createBlog = catchAsync(async (req: Request, res: Response) => {
 });
 const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
   const query = req.query;
-  console.log(query,'queiuoriwuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu')
   const result = await BlogService.getAllBlogsFromDB(query);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -38,7 +37,6 @@ const updateBlog = catchAsync(async (req: Request, res: Response) => {
 const deleteBlog = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await BlogService.deleteBlogFromDB(req, id);
-  console.log(result, "controller");
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
