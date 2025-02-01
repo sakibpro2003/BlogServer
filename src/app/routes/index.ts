@@ -12,16 +12,12 @@ const moduleRoutes = [
     route: BlogRoutes,
   },
   {
-    path: "/auth",
-    route: AuthRoutes,
-  },
-  {
-    path: "/create",
-    route: UserRoutes,
-  },
-  {
     path: "/admin",
     route: AdminRoutes,
+  },
+  {
+    path: "/auth",
+    route: AuthRoutes,
   },
 ];
 
