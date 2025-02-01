@@ -9,7 +9,7 @@ import config from "../../../config";
 
 const loginUser = async (payload: TLoginUser) => {
   const user = await User.isUserExistsByCustomId(payload?.email);
- const _id = (user?._id).toString();
+  const _id = (user?._id).toString();
   if (!user) {
     throw new AppError(StatusCodes.NOT_FOUND, "User not found!");
   }
@@ -19,11 +19,10 @@ const loginUser = async (payload: TLoginUser) => {
   }
 
   if (!(await User.isPasswordMatched(payload?.password, user?.password)))
-    throw new AppError(httpStatus.FORBIDDEN, "Password do not matched");
-  
+    throw new AppError(httpStatus.UNAUTHORIZED, "Invalid credentials");
 
   const jwtPayload = {
-    _id:user?._id,
+    _id: user?._id,
     role: user?.role,
   };
 
@@ -31,7 +30,6 @@ const loginUser = async (payload: TLoginUser) => {
     expiresIn: "10d",
   });
 
-  // console.log(user);
 
   return {
     accessToken,

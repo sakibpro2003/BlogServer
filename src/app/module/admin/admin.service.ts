@@ -1,16 +1,15 @@
-import httpStatus from "http-status";
-import AppError from "../../error/AppError";
 import { Blog } from "../Blog/blog.model";
 import { User } from "../User/user.model";
 
-type TBlockPayload = {
-  isBlocked: boolean;
-};
 
-const blockUserIntoDB = async (id: string, payload: TBlockPayload) => {
+
+const blockUserIntoDB = async (id: string) => {
   try {
     // Find user by the `id` field (string) instead of `_id`
-    const result = await User.findOneAndUpdate({ id }, payload);
+    const payload = {
+      isBlocked: true,
+    };
+    const result = await User.findByIdAndUpdate(id , payload);
     if (!result) {
       throw new Error("User not found");
     }
@@ -23,7 +22,7 @@ const blockUserIntoDB = async (id: string, payload: TBlockPayload) => {
 
 const deleteBlogFromDB = async (userId: string) => {
   // console.log('userId from service',userId)
-  const result = await Blog.findOneAndDelete({ _id:userId });
+  const result = await Blog.findOneAndDelete({ _id: userId });
   // console.log(result,"resutl")
   return result;
 };

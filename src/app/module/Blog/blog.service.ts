@@ -3,6 +3,7 @@ import AppError from "../../error/AppError";
 import { TBlog } from "./blog.interface";
 import { Blog } from "./blog.model";
 import { query, Request } from "express";
+import { isValidObjectId } from "mongoose";
 
 const createBlogIntoDB = async (payload: TBlog) => {
   const result = await Blog.create(payload);
@@ -55,13 +56,16 @@ const getAllBlogsFromDB = async (query) => {
     queryObj.author = query.filter; // Map `filter` to `author` in the query object
   }
 
-  const searchQuery = Blog.find({
-    $or: blogSearchableFields.map((field) => ({
-      [field]: { $regex: search, $options: "i" },
-    })),
-  });
+  const searchQuery = Blog.find(
+    {
+      $or: blogSearchableFields.map((field) => ({
+        [field]: { $regex: search, $options: "i" },
+      })),
+    },
+    { createdAt: 0, updatedAt: 0, isPublished: 0, __v: 0 }
+  );
   //filtering
-  const excludeFields = ["search", "sortBy", "filter","sortOrder"];
+  const excludeFields = ["search", "sortBy", "filter", "sortOrder"];
   excludeFields.forEach((element) => delete queryObj[element]);
 
   const filterQuery = searchQuery.find(queryObj).populate("author");
@@ -77,8 +81,9 @@ const getAllBlogsFromDB = async (query) => {
     console.log("desc", sortBy);
   }
 
-
-  const sortQuery = await filterQuery.sort(sortBy);
+  const sortQuery = await filterQuery
+    .sort(sortBy)
+    .populate("author", "name email");
 
   return sortQuery;
 };

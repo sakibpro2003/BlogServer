@@ -3,15 +3,26 @@ import sendResponse from "../../utils/sendResponse";
 import { BlogService } from "./blog.service";
 import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
+import { TBlog } from "./blog.interface";
 
 const createBlog = catchAsync(async (req: Request, res: Response) => {
   req.body.author = req.user._id;
   const result = await BlogService.createBlogIntoDB(req.body);
+  const authorPopulated = await result.populate({
+    path: "author",
+    select: "name email",
+  });
+  const { _id, title, content, author } = result;
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
     message: "Blog created successfully",
-    data: result,
+    data: {
+      _id,
+      title,
+      content,
+      author,
+    },
   });
 });
 const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
@@ -27,21 +38,31 @@ const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
 const updateBlog = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await BlogService.updateBlogIntoDB(req, id, req.body);
+  const authorPopulated = await result?.populate({
+    path: "author",
+    select: "name email",
+  });
+  const { _id, title, content, author } = result;
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: httpStatus.CREATED,
     success: true,
     message: "Blog updated successfully",
-    data: result,
+    data: {
+      _id,
+      title,
+      content,
+      author,
+    },
   });
 });
 const deleteBlog = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await BlogService.deleteBlogFromDB(req, id);
   sendResponse(res, {
-    statusCode: httpStatus.CREATED,
+    statusCode: httpStatus.OK,
     success: true,
     message: "Blog deleted successfully",
-    data: result,
+    
   });
 });
 

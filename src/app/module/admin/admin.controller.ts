@@ -8,17 +8,16 @@ import mongoose from "mongoose";
 import { Blog } from "../Blog/blog.model";
 
 const blockUser = async (req: Request, res: Response, next: NextFunction) => {
-  
   try {
-    const { userId } = req.params; 
+    const { userId } = req.params;
 
-    const result = await AdminServices.blockUserIntoDB(userId, req.body);
+    const result = await AdminServices.blockUserIntoDB(userId);
 
     if (!result) {
       return sendResponse(res, {
         statusCode: httpStatus.NOT_FOUND,
         success: false,
-        message: "User not found or update failed",
+        message: "User not found",
         data: null,
       });
     }
@@ -26,8 +25,7 @@ const blockUser = async (req: Request, res: Response, next: NextFunction) => {
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: `User ${result.isBlocked ? "blocked" : "unblocked"} successfully`,
-      data: result,
+      message: `User blocked successfully`,
     });
   } catch (error) {
     next(error);
@@ -38,10 +36,9 @@ const deleteBlog = async (req: Request, res: Response, next: NextFunction) => {
   // console.log(userId, "controller userid")
   const result = await AdminServices.deleteBlogFromDB(userId);
   sendResponse(res, {
-    statusCode: httpStatus.CREATED,
+    statusCode: httpStatus.OK,
     success: true,
     message: "Blog deleted successfully",
-    data: result,
   });
 };
 
