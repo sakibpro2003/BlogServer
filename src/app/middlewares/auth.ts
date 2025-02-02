@@ -4,13 +4,17 @@ import AppError from "../error/AppError";
 import httpStatus from "http-status";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../../config";
+import { USER_ROLE } from "../module/User/user.constant";
 
-const auth = (...requiredRoles) => {
+
+type TRequiredRoles = "user" | "admin";
+
+const auth = (...requiredRoles: TRequiredRoles[]) => {
+  console.log(requiredRoles, "req roles");
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const tokenWithBearer = req.headers.authorization;
     const token = tokenWithBearer?.split(" ")[1];
-    console.log(req.headers,'tone')
-    // console.log(token);
+    console.log(req.headers, "tone");
 
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized access!");

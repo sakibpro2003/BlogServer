@@ -189,7 +189,7 @@ const getAllBlogsFromDB = async (query: TQueryParams) => {
   if (sortBy) {
     sortOptions[sortBy] = sortOrder === "desc" ? -1 : 1;
   } else {
-    sortOptions["createdAt"] = -1; // Default sorting by createdAt in descending order
+    sortOptions["createdAt"] = -1;
   }
 
   const result = await Blog.find(queryObj)
