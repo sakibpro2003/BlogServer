@@ -8,11 +8,19 @@
 import { ObjectId } from "mongoose";
 import { TUser } from "../User/user.interface";
 
-export type TBlog = {
+// export type TBlog = {
+//   title: string;
+//   content: string;
+//   author: ObjectId | TUser;
+//   isPublished: boolean;
+
+//   // todo: timestap
+// };
+
+//!SECTION deepseek
+export interface TBlog {
   title: string;
   content: string;
-  author: ObjectId | TUser;
-  isPublished: boolean;
-
-  // todo: timestap
-};
+  author: ObjectId;
+  isPublished?: boolean;
+}

@@ -9,6 +9,7 @@ const auth = (...requiredRoles) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const tokenWithBearer = req.headers.authorization;
     const token = tokenWithBearer?.split(" ")[1];
+    console.log(req.headers,'tone')
     // console.log(token);
 
     if (!token) {
