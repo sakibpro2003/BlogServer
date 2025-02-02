@@ -14,5 +14,4 @@ router.post(
 
 router.post("/register", UserController.createUser);
 
-
 export const AuthRoutes = router;

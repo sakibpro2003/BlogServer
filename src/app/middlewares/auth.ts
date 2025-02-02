@@ -4,11 +4,10 @@ import AppError from "../error/AppError";
 import httpStatus from "http-status";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../../config";
-import { USER_ROLE } from "../module/User/user.constant";
-
 
 type TRequiredRoles = "user" | "admin";
 
+//NOTE: verifying user or admin
 const auth = (...requiredRoles: TRequiredRoles[]) => {
   console.log(requiredRoles, "req roles");
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -20,7 +19,6 @@ const auth = (...requiredRoles: TRequiredRoles[]) => {
       throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized access!");
     }
 
-    //check if the token is valid
     jwt.verify(
       token,
       config.jwt_access_secret as string,

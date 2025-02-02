@@ -29,9 +29,8 @@ const loginUser = async (payload: TLoginUser) => {
     expiresIn: "10d",
   });
 
-
   return {
-    token
+    token,
   };
 };
 

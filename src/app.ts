@@ -11,7 +11,7 @@ app.use("/api", router);
 
 //global error handler recieves 4 params
 //not found
-app.use(notFound)
+app.use(notFound);
 app.get("/", (req: Request, res: Response) => {
   res.send({
     status: true,

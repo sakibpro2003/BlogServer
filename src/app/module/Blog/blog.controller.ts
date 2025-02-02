@@ -3,9 +3,6 @@ import sendResponse from "../../utils/sendResponse";
 import { BlogService } from "./blog.service";
 import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
-import { TBlog } from "./blog.interface";
-import { TUser } from "../User/user.interface";
-
 
 const createBlog = catchAsync(async (req: Request, res: Response) => {
   req.body.author = req.user._id;
