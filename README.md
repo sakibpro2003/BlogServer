@@ -291,3 +291,5 @@ A consistent error response format is maintained across all endpoints:
    npm run start:dev
    ```
 
+Project overview video link: https://youtu.be/Z3eZCgAOYzs?si=5z56hAzaz-62Z-Kw
+
