@@ -1,62 +1,48 @@
-# BlogProject
+# Blogging Platform Backend
 
-##Overview
+## Overview
 
 This project is a backend system for a blogging platform where users can write, update, and delete their blogs. The system features role-based access control, allowing users to manage their own blogs while admins can manage users and their content. The public API provides features like search, sorting, and filtering for blog posts.
 
+## Technologies Used
 
+- **TypeScript**
+- **Node.js**
+- **Express.js**
+- **MongoDB with Mongoose**
+- **JSON Web Token (JWT) for authentication**
 
-Technologies Used
+## Features
 
-TypeScript
+### 1. User Roles
 
-Node.js
+#### **Admin:**
 
-Express.js
+- Created manually in the database with predefined credentials.
+- Can delete any blog.
+- Can block any user by updating a property `isBlocked`.
+- Cannot update any blog.
 
-MongoDB with Mongoose
+#### **User:**
 
-JSON Web Token (JWT) for authentication
+- Can register and log in.
+- Can create blogs when logged in.
+- Can update and delete their own blogs.
+- Cannot perform admin actions.
 
-Features
+### 2. Authentication & Authorization
 
-1. User Roles
+- Users must log in to perform write, update, and delete operations.
+- Role-based access control is enforced.
 
-Admin:
+### 3. Blog API
 
-Created manually in the database with predefined credentials.
+- Public API to view blogs.
+- Supports search, sorting, and filtering functionalities.
 
-Can delete any blog.
+##
 
-Can block any user by updating a property isBlocked.
-
-Cannot update any blog.
-
-User:
-
-Can register and log in.
-
-Can create blogs when logged in.
-
-Can update and delete their own blogs.
-
-Cannot perform admin actions.
-
-2. Authentication & Authorization
-
-Users must log in to perform write, update, and delete operations.
-
-Role-based access control is enforced.
-
-3. Blog API
-
-Public API to view blogs.
-
-Supports search, sorting, and filtering functionalities.
-
-##Models
-
-User Model
+```json
 {
   "name": "string",
   "email": "string",
@@ -66,84 +52,248 @@ User Model
   "createdAt": "Date",
   "updatedAt": "Date"
 }
-## Features
+```
 
-### Product Management:
-- Add, update, and list Bi-Cycles available for sale.
-- Store details like price, description, quantity, and stock status.
+### **Blog Model**
 
-### Order Management:
-- Customers can create orders specifying the product and quantity.
-- Automatically deducts quantity from inventory when an order is placed.
+```json
+{
+  "title": "string",
+  "content": "string",
+  "author": "ObjectId",
+  "isPublished": true,
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
 
-### Revenue Calculation:
-- The system calculates the total revenue generated from all orders.
-- Provides a revenue summary with the total amount earned.
+## API Endpoints
 
-### RESTful API:
-- Exposes endpoints to interact with products, orders, and revenue calculations.
+### 1. Authentication
 
-## Technologies Used
+#### Register User
 
-- **Backend**:
-  - Node.js
-  - Express.js
-  
-- **Database**:
-  - MongoDB (NoSQL database)
-  - Mongoose (Object Data Modeling for MongoDB)
+**POST** `/api/auth/register`
 
-- **Other**:
-  - JavaScript (ES6+)
-  - Postman for API testing
+##### Request Body:
 
-## Installation Instructions
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securepassword"
+}
+```
 
-Follow these steps to set up the project locally:
+##### Response:
 
-### Prerequisites
+```json
+{
+  "success": true,
+  "message": "User registered successfully",
+  "statusCode": 201,
+  "data": {
+    "_id": "string",
+    "name": "string",
+    "email": "string"
+  }
+}
+```
 
-- **Node.js** installed. [Download Node.js](https://nodejs.org/)
-- **MongoDB** installed locally or use [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for cloud-based MongoDB.
+#### Login User
 
-### Steps to Install
+**POST** `/api/auth/login`
 
-1. Clone the repository to your local machine:
-    ```bash
-    git clone https://github.com/yourusername/Bi-Cycle-shop-management.git
-    cd Bi-Cycle-shop-management
-    ```
+##### Request Body:
 
-2. Install dependencies:
-    ```bash
-    npm install
-    ```
+```json
+{
+  "email": "john@example.com",
+  "password": "securepassword"
+}
+```
 
-3. Create a `.env` file in the root directory and add your MongoDB connection string:
-    ```bash
-    MONGO_URI=mongodb://<your-database-uri>
-    ```
+##### Response:
 
-4. Start the server:
-    ```bash
-    npm start
-    ```
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "statusCode": 200,
+  "data": {
+    "token": "string"
+  }
+}
+```
 
-   This will run the application on `http://localhost:5000`.
+### 2. Blog Management
 
-## Configuration
+#### Create Blog
 
-### MongoDB URI:
-Modify the `MONGO_URI` in the `.env` file to point to your MongoDB instance. You can use MongoDB Atlas if you're hosting your database in the cloud:
-```plaintext
-MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/Bi-Cycle?retryWrites=true&w=majority
+**POST** `/api/blogs`
 
+##### Request Header:
 
-## Notes:
-- Replace `<product_id>`, `<order_id>` with actual product/order IDs in the request and response data.
-- Make sure MongoDB is running locally or use MongoDB Atlas for cloud-based hosting.
-- Adjust the values for product prices, quantities, and orders based on actual data in the database.
+```
+Authorization: Bearer <token>
+```
 
----
+##### Request Body:
 
-This file consolidates all your API endpoints and can be used for documentation or reference.
+```json
+{
+  "title": "My First Blog",
+  "content": "This is the content of my blog."
+}
+```
+
+##### Response:
+
+```json
+{
+  "success": true,
+  "message": "Blog created successfully",
+  "statusCode": 201,
+  "data": {
+    "_id": "string",
+    "title": "string",
+    "content": "string",
+    "author": { "details" }
+  }
+}
+```
+
+#### Update Blog
+
+**PATCH** `/api/blogs/:id`
+
+##### Request Header:
+
+```
+Authorization: Bearer <token>
+```
+
+##### Request Body:
+
+```json
+{
+  "title": "Updated Blog Title",
+  "content": "Updated content."
+}
+```
+
+#### Delete Blog
+
+**DELETE** `/api/blogs/:id`
+
+##### Request Header:
+
+```
+Authorization: Bearer <token>
+```
+
+##### Response:
+
+```json
+{
+  "success": true,
+  "message": "Blog deleted successfully",
+  "statusCode": 200
+}
+```
+
+### 3. Admin Actions
+
+#### Block User
+
+**PATCH** `/api/admin/users/:userId/block`
+
+##### Request Header:
+
+```
+Authorization: Bearer <admin_token>
+```
+
+##### Response:
+
+```json
+{
+  "success": true,
+  "message": "User blocked successfully",
+  "statusCode": 200
+}
+```
+
+#### Delete Any Blog
+
+**DELETE** `/api/admin/blogs/:id`
+
+##### Request Header:
+
+```
+Authorization: Bearer <admin_token>
+```
+
+##### Response:
+
+```json
+{
+  "success": true,
+  "message": "Blog deleted successfully",
+  "statusCode": 200
+}
+```
+
+## Bonus: Error Handling
+
+A consistent error response format is maintained across all endpoints:
+
+```json
+{
+  "success": false,
+  "message": "Error message describing the issue",
+  "statusCode": 400,
+  "error": {"details": "Additional error details, if applicable"},
+  "stack": "error stack trace, if available"
+}
+```
+
+### Common Errors
+
+- **Zod Validation Error**: Invalid data input.
+- **Not Found Error**: Requested resource not found.
+- **Authentication Error**: Invalid credentials or token.
+- **Authorization Error**: Insufficient permissions.
+- **Internal Server Error**: Unexpected issues.
+
+## Installation and Setup
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-repo/blog-platform-backend.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd blog-platform-backend
+   ```
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+4. Create a `.env` file in the root directory and set up the necessary environment variables:
+   ```env
+   PORT=5000
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_secret_key
+   ```
+5. Run the application:
+   ```sh
+   npm run dev
+   ```
+
+## License
+
+This project is licensed under the MIT License.
+
+add readme.md syntax 
+
