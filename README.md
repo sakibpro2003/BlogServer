@@ -1,18 +1,10 @@
-# Bi-Cycle Shop Management System
+# BlogProject
 
-A comprehensive **Bi-Cycle Shop Management System** for managing product inventory, processing customer orders, and calculating total revenue. This project is built with **Node.js**, **Express.js**, and **MongoDB** using **Mongoose** for object data modeling.
+Overview
 
-## Table of Contents
+This project is a backend system for a blogging platform where users can write, update, and delete their blogs. The system features role-based access control, allowing users to manage their own blogs while admins can manage users and their content. The public API provides features like search, sorting, and filtering for blog posts.
 
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Installation Instructions](#installation-instructions)
-- [Configuration](#configuration)
-- [API Endpoints](#api-endpoints)
-- [Usage](#usage)
-- [License](#license)
-- [Contributors](#contributors)
+
 
 ## Project Overview
 
