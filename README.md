@@ -1,19 +1,71 @@
 # BlogProject
 
-Overview
+##Overview
 
 This project is a backend system for a blogging platform where users can write, update, and delete their blogs. The system features role-based access control, allowing users to manage their own blogs while admins can manage users and their content. The public API provides features like search, sorting, and filtering for blog posts.
 
 
 
-## Project Overview
+Technologies Used
 
-The **Bi-Cycle Shop Management System** is designed to manage a Bi-Cycle shop’s product catalog and customer orders. Key functionalities include:
+TypeScript
 
-- **Product Management**: Admins can manage different Bi-Cycle products in the shop’s inventory.
-- **Order Management**: Customers can place orders, which track the quantity and total cost of products.
-- **Revenue Calculation**: The system calculates the total revenue by multiplying the quantity of Bi-Cycles ordered by their price.
+Node.js
 
+Express.js
+
+MongoDB with Mongoose
+
+JSON Web Token (JWT) for authentication
+
+Features
+
+1. User Roles
+
+Admin:
+
+Created manually in the database with predefined credentials.
+
+Can delete any blog.
+
+Can block any user by updating a property isBlocked.
+
+Cannot update any blog.
+
+User:
+
+Can register and log in.
+
+Can create blogs when logged in.
+
+Can update and delete their own blogs.
+
+Cannot perform admin actions.
+
+2. Authentication & Authorization
+
+Users must log in to perform write, update, and delete operations.
+
+Role-based access control is enforced.
+
+3. Blog API
+
+Public API to view blogs.
+
+Supports search, sorting, and filtering functionalities.
+
+##Models
+
+User Model
+{
+  "name": "string",
+  "email": "string",
+  "password": "string",
+  "role": "admin | user",
+  "isBlocked": false,
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
 ## Features
 
 ### Product Management:
