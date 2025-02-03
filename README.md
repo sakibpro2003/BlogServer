@@ -274,7 +274,7 @@ A consistent error response format is maintained across all endpoints:
    ```
 2. Navigate to the project directory:
    ```sh
-   cd blog-server
+   cd BlogServer
    ```
 3. Install dependencies:
    ```sh
