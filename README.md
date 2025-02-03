@@ -274,13 +274,13 @@ A consistent error response format is maintained across all endpoints:
    ```
 2. Navigate to the project directory:
    ```sh
-   cd blog-platform-backend
+   cd blog-server
    ```
 3. Install dependencies:
    ```sh
    npm install
    ```
-4. Create a `.env` file in the root directory and set up the necessary environment variables:
+4. Create a `.env` file in the root directory and set up the necessary environment variables(follow .env.example):
    ```env
    PORT=5000
    MONGO_URI=your_mongodb_connection_string
