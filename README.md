@@ -270,7 +270,7 @@ A consistent error response format is maintained across all endpoints:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repo/blog-platform-backend.git
+   git clone https://github.com/sakibpro2003/BlogServer.git
    ```
 2. Navigate to the project directory:
    ```sh
