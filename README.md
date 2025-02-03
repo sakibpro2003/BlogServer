@@ -288,12 +288,6 @@ A consistent error response format is maintained across all endpoints:
    ```
 5. Run the application:
    ```sh
-   npm run dev
+   npm run start:dev
    ```
-
-## License
-
-This project is licensed under the MIT License.
-
-add readme.md syntax 
 
